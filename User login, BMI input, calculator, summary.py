@@ -20,3 +20,13 @@ def bmi_category(bmi):
         return "Overweight"
     else:
         return "Obesity"
+    
+# output of BMI
+def summaryBMI():
+    height = float(input("Enter your height in cm: "))
+    weight = float(input("Enter your weight in kg: "))
+    bmi = calculate_bmi(height, weight)
+    category = bmi_category(bmi)
+    print(f"\n {username} your BMI is: {bmi}")
+    print(f" {username} your Category: {category}")
+summaryBMI()
