@@ -35,3 +35,18 @@ button.pack()
 entry = tk.Entry(root)
 entry.insert(0,'type:')
 entry.pack()
+
+def submit():
+    label = Label(root, text = '' + entry.get())
+    label.pack()
+
+button= Button(root, text='enter', command= submit)
+button.pack()
+entry.pack()
+entry1 = entry.pack()
+entry2 = Message(root, text=entry1)
+entry2.config(bg= 'blue')
+entry2.pack()
+
+
+mainloop()
