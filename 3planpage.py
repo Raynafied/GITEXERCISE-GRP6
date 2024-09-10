@@ -73,11 +73,11 @@ class WorkoutPlanPage(tk.Frame):
         super().__init__(app.root, bg="grey") 
         self.app = app
 
-        # Create and pack the label
+        
         label = tk.Label(self, text="Workout Plan", font=("Helvetica", 16, "bold"), bg="pink")
         label.pack(pady=20)
 
-        # Create a list of workout plans
+        
         workout_plans = [
             "Push-ups: 3 sets of 12 reps",
             "Squats: 4 sets of 15 reps",
@@ -87,19 +87,17 @@ class WorkoutPlanPage(tk.Frame):
         ]
 
         for plan in workout_plans:
-            # Adding labels for workout plan
             tk.Label(self, text=plan, font=("Helvetica", 12), bg="pink").pack(pady=5)
 
 class DietPlanPage(tk.Frame):
     def __init__(self, app):
-        super().__init__(app.root, bg="grey")  # Use simple color names
+        super().__init__(app.root, bg="grey")
         self.app = app
 
         # Create and pack the label
         label = tk.Label(self, text="Diet Plan", font=("Helvetica", 16, "bold"), bg="pink")
         label.pack(pady=20)
 
-        # Create a list of diet plans
         diet_plans = [
             "Breakfast: Oatmeal with fruits",
             "Lunch: Grilled chicken salad",
@@ -109,7 +107,6 @@ class DietPlanPage(tk.Frame):
         ]
 
         for plan in diet_plans:
-            # Adding labels for diet plan
             tk.Label(self, text=plan, font=("Helvetica", 12), bg="pink").pack(pady=5)
 
 # main application loop
