@@ -55,15 +55,42 @@
 
 # window.mainloop()
 
+
+
 # Start (working)
+# from tkinter import*
+
+# window = Tk()
+
+# window.state('zoomed')
+# window.title('Female Fitness App')
+
+# label = Label(window,text='Welcome, Please enter your name gorgeous!')
+# label.pack()
+
+# window.mainloop()
+
+
+
+# 2nd progress - to make user type their name 
 from tkinter import*
+import tkinter
 
 window = Tk()
 
-window.state('zoomed')
+window.state('zoomed') #window.geometry('500x500')
 window.title('Female Fitness App')
 
-label = Label(window,text='Welcome, Please enter your name gorgeous!')
-label.pack()
+frame = tkinter.Frame()
 
+login_label = tkinter.Label(frame, text="Welcome")
+name_label = tkinter.Label(frame, text="Enter Your Name Gorgeous! ")
+name_entry = tkinter.Entry(frame)
+
+login_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
+name_label.grid(row=1, column=0)
+name_entry.grid(row=1, column=1, pady=20)
+
+frame.pack()
 window.mainloop()
+# user can type their name here already
