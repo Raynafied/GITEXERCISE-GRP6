@@ -38,19 +38,32 @@
 
 
 # 4th testing the entrybox
+# from tkinter import*
+# def submit():
+#     value = entry.get()
+#     print(value)
+
+# window = Tk()
+# window.geometry('500x500')
+# window.title('Female Fitness App')
+
+# entry = Entry(window)
+# entry.place(x=100,y=200)
+
+# buttonSubmit = Button(window,text='Lets Start',command=submit)
+# buttonSubmit.place(x=200,y=100)
+
+# window.mainloop()
+
+# Start (working)
 from tkinter import*
-def submit():
-    value = entry.get()
-    print(value)
 
 window = Tk()
-window.geometry('500x500')
+
+window.state('zoomed')
 window.title('Female Fitness App')
 
-entry = Entry(window)
-entry.place(x=100,y=200)
-
-buttonSubmit = Button(window,text='Lets Start',command=submit)
-buttonSubmit.place(x=200,y=100)
+label = Label(window,text='Welcome, Please enter your name gorgeous!')
+label.pack()
 
 window.mainloop()
