@@ -1,52 +1,130 @@
-from tkinter import *
 import tkinter as tk
-root = Tk()
-root.geometry('200x100')
-root.title('planner')
+from tkinter import messagebox
+import shelve
+import json
+
+def submitbutton():
+    if any(var.get() for var in check_vars1):
+        submit_button1.config(state=tk.NORMAL)
+    else:
+        submit_button1.config(state=tk.DISABLED)
+
+def submitselections():
+    selected_days = [day for day, var in zip(days_of_week, check_vars1) if var.get()]
+    print(f"Week {week}: Selected Days: {selected_days}")
+    
+    # Save the next week number
+    with shelve.open('week_data') as db:
+        db['week'] = week + 1
+    
+    messagebox.showinfo("Success", f"Week {week} submitted! Moving to Week {week + 1}.")
+    show_frame(main_page)
+
+def submitbutton1():
+    if any(var.get() for var in check_vars2):
+        submit_button2.config(state=tk.NORMAL)
+    else:
+        submit_button2.config(state=tk.DISABLED)
+
+def submitselections1():
+    choose_options = [day for day, var in zip(a_week_of_days, check_vars2) if var.get()]
+    print(f"Week {week}: Selected Days: {choose_options}")
+    
+    # Save the next week number
+    with shelve.open('week_data') as db:
+        db['week'] = week + 1
+    
+    messagebox.showinfo("Success", f"Week {week} submitted! Moving to Week {week + 1}.")
+    show_frame(main_page)
 
 
-def week():
-    v = IntVar()
-    a = Checkbutton(root, text = 'Monday', variable = v, font= ('Arial', 12)).pack(anchor=W)
-    b = Checkbutton(root, text = 'Tuesday', variable = v, font= ('Arial', 12)).pack(anchor=W)
-    c = Checkbutton(root, text = 'Wednesday', variable = v, font= ('Arial', 12)).pack(anchor=W)
-    d = Checkbutton(root, text = 'Thursday', variable = v, font= ('Arial', 12)).pack(anchor=W)
-    e = Checkbutton(root, text = 'Friday', variable = v, font= ('Arial', 12)).pack(anchor=W)
+def reset_week():
+    with shelve.open('week_data') as db:
+        db['week'] = 1
+    messagebox.showinfo("Reset", "Week number reset to 1.")
+    # Reload the week number and update UI
+    global week
+    week = 1
+    week_label.config(text=f"Select days for Week {week}")
 
-label1 = Label(root, text ='Submit your daily progress', font= ('Arial', 16))
+def save_to_json(data, filename='data.json'):
+    with open(filename, 'w') as file:
+        json.dump(data, file, indent=4)
+    messagebox.showinfo("Success", f"Data saved to {filename}")
+
+def load_choice(filename='choice.txt'):
+    try:
+        with open(filename, 'r') as file:
+            return file.read().strip()
+    except FileNotFoundError:
+        return None
+
+def show_frame(frame):
+    frame.tkraise()
+
+root = tk.Tk()
+root.geometry('500x500')
+root.title('Planner')
+
+with shelve.open('week_data') as db:
+    week = db.get('week', 1)
+
+main_page = tk.Frame(root)
+week_page = tk.Frame(root)
+page1 = tk.Frame(root)
+
+
+for frame in (main_page, week_page, page1):
+    frame.place(relx=0, rely=0, relwidth=1, relheight=1)
+
+label1 = tk.Label(main_page, text="Keep yourself updated", font=('Arial', 16))
 label1.pack()
 
+pageA_button = tk.Button(main_page, text='Submit your weekly progress', font=('Arial', 12), command=lambda: show_frame(week_page))
+pageA_button.pack()
 
-label2 = Label(root, text ='Click ', font= (' Serif', 14))
-label2.pack()
+pageB_button = tk.Button(main_page, text="Weekly Health Update", font=('Arial', 12), command=lambda: show_frame(page1))
+pageB_button.pack()
 
-label3 = Label(root, text ='Week 1', font= ('Arial', 16), padx=20, pady=40)
-label3.pack()
-week()
+week_label = tk.Label(week_page, text=f"Select days for Week {week}", font=("Arial", 14))
+week_label.pack(pady=10)
 
-label4 = Label(root, text ='Week 2', font= ('Arial', 16))
-label4.pack()
-week()
+reset_button = tk.Button(main_page, text="Reset to Week 1", command=reset_week)
+reset_button.pack(pady=5)
 
+days_of_week = ["day 1", "day 2", "day 3", "day 4", "day 5", "day 6", "day 7"]
+check_vars1 = []
 
-button = tk.Button(root, text='Submit')
-button.pack()
+for day in days_of_week:
+    var = tk.IntVar()
+    check_vars1.append(var)
+    chk = tk.Checkbutton(week_page, text=day, variable=var, command=submitbutton)
+    chk.pack(anchor='w')
 
-entry = tk.Entry(root)
-entry.insert(0,'type:')
-entry.pack()
-
-def submit():
-    label = Label(root, text = '' + entry.get())
-    label.pack()
-
-button= Button(root, text='enter', command= submit)
-button.pack()
-entry.pack()
-entry1 = entry.pack()
-entry2 = Message(root, text=entry1)
-entry2.config(bg= 'blue')
-entry2.pack()
+submit_button1 = tk.Button(week_page, text="Submit", state=tk.DISABLED, command=submitselections)
+submit_button1.pack(pady=20)
+back_button1 = tk.Button(week_page, text="Back to Main Page", command=lambda: show_frame(main_page))
+back_button1.pack(pady=10)
 
 
-mainloop()
+
+
+#2
+labelA1 = tk.Label(page1, text="Track your menstrual cycle")
+labelA1.pack()
+
+check_vars2 = []
+a_week_of_days = ["7 days", "6 days", "5 days", "4 days", "3 days"]
+
+for day in a_week_of_days:
+    var = tk.IntVar()
+    check_vars2.append(var)
+    chk = tk.Checkbutton(page1, text=day, variable=var, command=submitbutton1)
+    chk.pack(anchor='w')
+
+submit_button2 = tk.Button(page1, text="Submit", state=tk.DISABLED, command=submitselections1)
+submit_button2.pack(pady=20)
+back_button2 = tk.Button(page1, text="Back to Main Page", command=lambda: show_frame(main_page))
+back_button2.pack(pady=10)
+show_frame(main_page)
+root.mainloop()
