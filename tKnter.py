@@ -96,26 +96,28 @@
 # user can type their name here already 
 
 
-# 3rd Progress to make user to click something after typing their name
-from tkinter import*
-import tkinter
-window = Tk()
+# # 3rd Progress to make user to click something after typing their name
+# from tkinter import*
+# import tkinter
+# window = Tk()
 
-# window.state('zoomed') or
-window.geometry('500x500')
-window.title('Female Fitness App')
-frame = tkinter.Frame()
+# # window.state('zoomed') or
+# window.geometry('500x500')
+# window.title('Female Fitness App')
+# frame = tkinter.Frame()
 
-login_label = tkinter.Label(frame, text="Welcome,")
-name_label = tkinter.Label(frame, text="Enter Your Name Gorgeous! ")
-name_entry = tkinter.Entry(frame)
-login_button = tkinter.Button(frame, text="Let's Start")
+# login_label = tkinter.Label(frame, text="Welcome,")
+# name_label = tkinter.Label(frame, text="Enter Your Name Gorgeous! ")
+# name_entry = tkinter.Entry(frame)
+# login_button = tkinter.Button(frame, text="Let's Start")
 
-login_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
-name_label.grid(row=1, column=0)
-name_entry.grid(row=1, column=1, pady=20)
-login_button.grid(row=3, column=0, columnspan=2, pady=30)
+# login_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
+# name_label.grid(row=1, column=0)
+# name_entry.grid(row=1, column=1, pady=20)
+# login_button.grid(row=3, column=0, columnspan=2, pady=30)
 
-frame.pack()
-window.mainloop()
-# user can click button after typing their name (but does not redirect anywhr)
+# frame.pack()
+# window.mainloop()
+# # user can click button after typing their name (but does not redirect anywhr)
+
+# SETTLED - FOR USER LOGIN/WELCOME PAGE 
