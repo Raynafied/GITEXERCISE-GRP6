@@ -158,6 +158,52 @@
 
 # Progress BMI Calculator/Data  2 - to include the function to collect users h&w in order to calculate their BMI
 
+# from tkinter import*
+# import tkinter
+
+# window = Tk()
+
+# # window.state('zoomed')
+# window.geometry('500x500')
+# window.title('Female Fitness App')
+# frame = tkinter.Frame()
+
+# def calculate_bmi():
+#     try:
+#         height = float(height_entry.get()) / 100  # convert cm to m
+#         weight = float(weight_entry.get())
+#         bmi = weight / (height ** 2)
+#         bmi_result.config(text=f"Your BMI is {bmi}")
+#     except ValueError:
+#         bmi_result.config(text="Please enter valid numbers")
+
+# # welcome_label = tkinter.Label(frame, text="Welcome!")
+# bmi_label = tkinter.Label(frame, text="BMI Calculator")
+# height_label = tkinter.Label(frame, text="Please enter Your Height (in cm) : ")
+# height_entry = tkinter.Entry(frame)
+# weight_label = tkinter.Label(frame, text="Please enter Your Weight (in kg) : ")
+# weight_entry = tkinter.Entry(frame)
+# bmicalculator_button = Button(frame, text="Calculate My BMI", command=calculate_bmi)
+# bmi_result = Label(frame, text="")
+
+# # welcome_label.grid(row=0, column=0, sticky="nw", columnspan=2, pady=10)
+# bmi_label.grid(column=0, columnspan=2, sticky="news", pady=30)
+# height_label.grid(row=2, column=0)
+# height_entry.grid(row=3, column=0, pady=10)
+# weight_label.grid(row=4, column=0)
+# weight_entry.grid(row=5, column=0, pady=10)
+# bmicalculator_button.grid(row=6, column=0, columnspan=2, pady=30)
+# bmi_result.grid(row=7, column=0, columnspan=2)
+
+# frame.pack()
+# window.mainloop()
+# # # user can calculate their bmi and user can see their bmi
+
+
+
+#Progress BMI Calculator/Data 3 - to show the category of BMI users are in
+# - to add "lets continue" button 
+
 from tkinter import*
 import tkinter
 
@@ -168,12 +214,24 @@ window.geometry('500x500')
 window.title('Female Fitness App')
 frame = tkinter.Frame()
 
+def bmi_category(bmi):
+    if bmi < 18.5:
+        return "Underweight"
+    elif 18.5 <= bmi < 24.9:
+        return "Normal weight"
+    elif 25 <= bmi < 29.9:
+        return "Overweight"
+    else:
+        return "Obesity"
+
 def calculate_bmi():
     try:
         height = float(height_entry.get()) / 100  # convert cm to m
         weight = float(weight_entry.get())
         bmi = weight / (height ** 2)
+        category = bmi_category(bmi)
         bmi_result.config(text=f"Your BMI is {bmi}")
+        category_result.config(text=f"Category: {category}")
     except ValueError:
         bmi_result.config(text="Please enter valid numbers")
 
@@ -185,6 +243,8 @@ weight_label = tkinter.Label(frame, text="Please enter Your Weight (in kg) : ")
 weight_entry = tkinter.Entry(frame)
 bmicalculator_button = Button(frame, text="Calculate My BMI", command=calculate_bmi)
 bmi_result = Label(frame, text="")
+category_result = Label(frame, text="")
+continue_button = Button(frame, text="Let's Continue")
 
 # welcome_label.grid(row=0, column=0, sticky="nw", columnspan=2, pady=10)
 bmi_label.grid(column=0, columnspan=2, sticky="news", pady=30)
@@ -194,7 +254,9 @@ weight_label.grid(row=4, column=0)
 weight_entry.grid(row=5, column=0, pady=10)
 bmicalculator_button.grid(row=6, column=0, columnspan=2, pady=30)
 bmi_result.grid(row=7, column=0, columnspan=2)
+category_result.grid(row=8, column=0, columnspan=2, pady=10)
+continue_button.grid(row=10, column=0, columnspan=2, pady=10)
 
 frame.pack()
 window.mainloop()
-# # user can calculate their bmi and user can see their bmi
+##user can get their category displayed & also added a "lets continue button"
