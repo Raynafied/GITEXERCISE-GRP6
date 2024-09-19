@@ -121,3 +121,35 @@
 # # user can click button after typing their name (but does not redirect anywhr)
 
 # SETTLED - FOR USER LOGIN/WELCOME PAGE 
+
+
+
+# BMI Page 
+# Progress BMI Calculator/Data  1
+from tkinter import*
+import tkinter
+
+window = Tk()
+
+# window.state('zoomed')
+window.geometry('500x500')
+window.title('Female Fitness App')
+frame = tkinter.Frame()
+
+bmi_label = tkinter.Label(frame, text="BMI Calculator")
+height_label = tkinter.Label(frame, text="Enter Your Height: ")
+height_entry = tkinter.Entry(frame)
+weight_label = tkinter.Label(frame, text="Enter Your Weight: ")
+weight_entry = tkinter.Entry(frame)
+bmicalculate_button = tkinter.Button(frame, text="My BMI")
+
+bmi_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
+height_label.grid(row=1, column=0)
+height_entry.grid(row=2, column=0, pady=10)
+weight_label.grid(row=3, column=0)
+weight_entry.grid(row=4, column=0, pady=10)
+bmicalculate_button.grid(row=5, column=0, columnspan=2, pady=30)
+
+frame.pack()
+window.mainloop()
+#can insert height & weight but will not show the calculated bmi
