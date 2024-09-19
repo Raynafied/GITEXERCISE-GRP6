@@ -126,6 +126,38 @@
 
 # BMI Page 
 # Progress BMI Calculator/Data  1
+# from tkinter import*
+# import tkinter
+
+# window = Tk()
+
+# # window.state('zoomed')
+# window.geometry('500x500')
+# window.title('Female Fitness App')
+# frame = tkinter.Frame()
+
+# bmi_label = tkinter.Label(frame, text="BMI Calculator")
+# height_label = tkinter.Label(frame, text="Enter Your Height: ")
+# height_entry = tkinter.Entry(frame)
+# weight_label = tkinter.Label(frame, text="Enter Your Weight: ")
+# weight_entry = tkinter.Entry(frame)
+# bmicalculate_button = tkinter.Button(frame, text="My BMI")
+
+# bmi_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
+# height_label.grid(row=1, column=0)
+# height_entry.grid(row=2, column=0, pady=10)
+# weight_label.grid(row=3, column=0)
+# weight_entry.grid(row=4, column=0, pady=10)
+# bmicalculate_button.grid(row=5, column=0, columnspan=2, pady=30)
+
+# frame.pack()
+# window.mainloop()
+# #can insert height & weight but will not show the calculated bmi
+
+
+
+# Progress BMI Calculator/Data  2 - to include the function to collect users h&w in order to calculate their BMI
+
 from tkinter import*
 import tkinter
 
@@ -136,20 +168,33 @@ window.geometry('500x500')
 window.title('Female Fitness App')
 frame = tkinter.Frame()
 
-bmi_label = tkinter.Label(frame, text="BMI Calculator")
-height_label = tkinter.Label(frame, text="Enter Your Height: ")
-height_entry = tkinter.Entry(frame)
-weight_label = tkinter.Label(frame, text="Enter Your Weight: ")
-weight_entry = tkinter.Entry(frame)
-bmicalculate_button = tkinter.Button(frame, text="My BMI")
+def calculate_bmi():
+    try:
+        height = float(height_entry.get()) / 100  # convert cm to m
+        weight = float(weight_entry.get())
+        bmi = weight / (height ** 2)
+        bmi_result.config(text=f"Your BMI is {bmi}")
+    except ValueError:
+        bmi_result.config(text="Please enter valid numbers")
 
-bmi_label.grid(row=0, column=0, columnspan=2, sticky="news", pady=40)
-height_label.grid(row=1, column=0)
-height_entry.grid(row=2, column=0, pady=10)
-weight_label.grid(row=3, column=0)
-weight_entry.grid(row=4, column=0, pady=10)
-bmicalculate_button.grid(row=5, column=0, columnspan=2, pady=30)
+# welcome_label = tkinter.Label(frame, text="Welcome!")
+bmi_label = tkinter.Label(frame, text="BMI Calculator")
+height_label = tkinter.Label(frame, text="Please enter Your Height (in cm) : ")
+height_entry = tkinter.Entry(frame)
+weight_label = tkinter.Label(frame, text="Please enter Your Weight (in kg) : ")
+weight_entry = tkinter.Entry(frame)
+bmicalculator_button = Button(frame, text="Calculate My BMI", command=calculate_bmi)
+bmi_result = Label(frame, text="")
+
+# welcome_label.grid(row=0, column=0, sticky="nw", columnspan=2, pady=10)
+bmi_label.grid(column=0, columnspan=2, sticky="news", pady=30)
+height_label.grid(row=2, column=0)
+height_entry.grid(row=3, column=0, pady=10)
+weight_label.grid(row=4, column=0)
+weight_entry.grid(row=5, column=0, pady=10)
+bmicalculator_button.grid(row=6, column=0, columnspan=2, pady=30)
+bmi_result.grid(row=7, column=0, columnspan=2)
 
 frame.pack()
 window.mainloop()
-#can insert height & weight but will not show the calculated bmi
+# # user can calculate their bmi and user can see their bmi
