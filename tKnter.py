@@ -333,6 +333,103 @@
 
 #combined user login and bmi data for 2 pages completed
 
+# import tkinter as tk
+# from tkinter import ttk
+
+# class FemaleFitnessApp(tk.Tk):
+#     def __init__(self):
+#         super().__init__()
+#         self.geometry('500x500')
+#         self.title('Female Fitness App')
+#         self.frame = ttk.Frame(self)
+#         self.frame.pack(fill=tk.BOTH, expand=True)
+#         self.show_login_page()
+
+#     def show_login_page(self):
+#         for widget in self.frame.winfo_children():
+#             widget.destroy()
+
+#         def check_name(*args):
+#             if self.name_entry.get().strip():
+#                 login_button.config(state=tk.NORMAL)
+#             else:
+#                 login_button.config(state=tk.DISABLED)
+
+#         login_label = ttk.Label(self.frame, text="Welcome to Female Fitness App!")
+#         name_label = ttk.Label(self.frame, text="Enter Your Name Gorgeous: ")
+#         self.name_entry = ttk.Entry(self.frame)
+#         login_button = ttk.Button(self.frame, text="Let's Start", command=self.show_bmi_page, state=tk.DISABLED)
+
+#         login_label.grid(row=0, column=0, columnspan=2, pady=40, padx=20)
+#         name_label.grid(row=1, column=0, padx=(0,10), sticky="e")
+#         self.name_entry.grid(row=1, column=1, pady=10, padx=10, sticky="w")
+#         login_button.grid(row=2, column=0, columnspan=2, pady=30)
+
+#         self.frame.grid_columnconfigure(0, weight=1)
+#         self.frame.grid_columnconfigure(1, weight=1)
+
+#         self.name_var = tk.StringVar()
+#         self.name_entry.config(textvariable=self.name_var)
+#         self.name_var.trace("w", check_name)
+
+#     def show_bmi_page(self):
+#         for widget in self.frame.winfo_children():
+#             widget.destroy()
+
+#         def bmi_category(bmi):
+#             if bmi < 18.5:
+#                 return "Underweight"
+#             elif 18.5 <= bmi < 24.9:
+#                 return "Normal weight"
+#             elif 25 <= bmi < 29.9:
+#                 return "Overweight"
+#             else:
+#                 return "Obesity"
+
+#         def calculate_bmi():
+#             try:
+#                 height = float(height_entry.get()) / 100  # convert cm to m
+#                 weight = float(weight_entry.get())
+#                 bmi = weight / (height ** 2)
+#                 category = bmi_category(bmi)
+#                 bmi_result.config(text=f"Your BMI is {bmi:.2f}")
+#                 category_result.config(text=f"Category: {category}")
+#                 continue_button.config(state=tk.NORMAL)
+#             except ValueError:
+#                 bmi_result.config(text="Please enter valid numbers")
+#                 category_result.config(text="")
+#                 continue_button.config(state=tk.DISABLED)
+
+#         bmi_label = ttk.Label(self.frame, text="Body Mass Index Calculator")
+#         height_label = ttk.Label(self.frame, text="Please enter Your Height (in cm) : ")
+#         height_entry = ttk.Entry(self.frame)
+#         weight_label = ttk.Label(self.frame, text="Please enter Your Weight (in kg) : ")
+#         weight_entry = ttk.Entry(self.frame)
+#         bmicalculator_button = ttk.Button(self.frame, text="Calculate My BMI", command=calculate_bmi)
+#         bmi_result = ttk.Label(self.frame, text="")
+#         category_result = ttk.Label(self.frame, text="")
+#         continue_button = ttk.Button(self.frame, text="Let's Continue", state=tk.DISABLED)
+
+#         bmi_label.grid(column=0, columnspan=2, pady=30)
+#         height_label.grid(row=2, column=0, columnspan=2)
+#         height_entry.grid(row=3, column=0, columnspan=2, pady=10)
+#         weight_label.grid(row=4, column=0, columnspan=2)
+#         weight_entry.grid(row=5, column=0, columnspan=2, pady=10)
+#         bmicalculator_button.grid(row=6, column=0, columnspan=2, pady=30)
+#         bmi_result.grid(row=7, column=0, columnspan=2)
+#         category_result.grid(row=8, column=0, columnspan=2, pady=10)
+#         continue_button.grid(row=10, column=0, columnspan=2, sticky="s", pady=10)
+
+#         self.frame.grid_columnconfigure(0, weight=1)
+#         self.frame.grid_columnconfigure(1, weight=1)
+
+# if __name__ == "__main__":
+#     app = FemaleFitnessApp()
+#     app.mainloop()
+
+#updates done 23 Sept 2024 
+# added age into the login page, disabled the lets start button as well 
+
 import tkinter as tk
 from tkinter import ttk
 
@@ -349,8 +446,13 @@ class FemaleFitnessApp(tk.Tk):
         for widget in self.frame.winfo_children():
             widget.destroy()
 
-        def check_name(*args):
-            if self.name_entry.get().strip():
+        def validate_age(P):
+            return P.isdigit() or P == ""
+
+        def validate_inputs(*args):
+            name = self.name_entry.get().strip()
+            age = self.age_entry.get().strip()
+            if name and age.isdigit():
                 login_button.config(state=tk.NORMAL)
             else:
                 login_button.config(state=tk.DISABLED)
@@ -358,19 +460,30 @@ class FemaleFitnessApp(tk.Tk):
         login_label = ttk.Label(self.frame, text="Welcome to Female Fitness App!")
         name_label = ttk.Label(self.frame, text="Enter Your Name Gorgeous: ")
         self.name_entry = ttk.Entry(self.frame)
+        age_label = ttk.Label(self.frame, text="Enter Your Age: ")
+        self.age_entry = ttk.Entry(self.frame, validate="key", validatecommand=(self.register(validate_age), '%P'))
         login_button = ttk.Button(self.frame, text="Let's Start", command=self.show_bmi_page, state=tk.DISABLED)
 
         login_label.grid(row=0, column=0, columnspan=2, pady=40, padx=20)
         name_label.grid(row=1, column=0, padx=(0,10), sticky="e")
         self.name_entry.grid(row=1, column=1, pady=10, padx=10, sticky="w")
-        login_button.grid(row=2, column=0, columnspan=2, pady=30)
+        age_label.grid(row=2, column=0, padx=(0, 10), sticky="e")
+        self.age_entry.grid(row=2, column=1, pady=10, padx=10, sticky="w")
+        login_button.grid(row=3, column=0, columnspan=2, pady=30)
 
         self.frame.grid_columnconfigure(0, weight=1)
         self.frame.grid_columnconfigure(1, weight=1)
 
-        self.name_var = tk.StringVar()
-        self.name_entry.config(textvariable=self.name_var)
-        self.name_var.trace("w", check_name)
+        self.name_entry.bind('<KeyRelease>', validate_inputs)
+        self.age_entry.bind('<KeyRelease>', validate_inputs)
+
+    def validate_and_proceed(self):
+        age = self.age_entry.get()
+        if age.isdigit():
+            self.show_bmi_page()
+        else:
+            error_label = ttk.Label(self.frame, text="Please enter a valid age (numbers only)", foreground="red")
+            error_label.grid(row=4, column=0, columnspan=2, pady=10)
 
     def show_bmi_page(self):
         for widget in self.frame.winfo_children():
