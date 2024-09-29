@@ -523,6 +523,8 @@ class FemaleFitnessApp(tk.Tk):
         category_result = ttk.Label(self.frame, text="")
         continue_button = ttk.Button(self.frame, text="Let's Continue", state=tk.DISABLED)
 
+        summary_page_button = ttk.Button(self.frame, text="My Summary Page", command=self.show_summary_page)
+
         bmi_label.grid(column=0, columnspan=2, pady=30)
         height_label.grid(row=2, column=0, columnspan=2)
         height_entry.grid(row=3, column=0, columnspan=2, pady=10)
@@ -533,8 +535,88 @@ class FemaleFitnessApp(tk.Tk):
         category_result.grid(row=8, column=0, columnspan=2, pady=10)
         continue_button.grid(row=10, column=0, columnspan=2, sticky="s", pady=10)
 
+        summary_page_button.grid(row=12, column=0, columnspan=2, sticky="s", pady=10) 
+
+
         self.frame.grid_columnconfigure(0, weight=1)
         self.frame.grid_columnconfigure(1, weight=1)
+
+## FINALIZED SUMMARY CHART AFTER MERGE WITH TEAMMATE CODE
+#note: THIS IS THE CODE THAT RUNS
+    def show_summary_page(self):
+        self.update_background('choipla')
+        for widget in self.frame.winfo_children():
+            widget.destroy()
+
+        main_frame = ttk.Frame(self.frame)
+        main_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+
+        title_label = ttk.Label(main_frame, text="Your Fitness Summary")
+        title_label.pack(pady=(0, 20))
+
+        # Top section: BMI and Goal Summary
+        top_frame = ttk.Frame(main_frame)
+        top_frame.pack(fill=tk.X, pady=(0, 20))
+
+        # BMI Information
+        bmi_frame = ttk.LabelFrame(top_frame, text="BMI Information")
+        bmi_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 10))
+        ttk.Label(bmi_frame, text=f"BMI: {self.user_data['bmi']:.2f}").pack(pady=5)
+        ttk.Label(bmi_frame, text=f"Category: {self.user_data['bmi_category']}").pack(pady=5)
+
+        # Goal Summary
+        goal_frame = ttk.LabelFrame(top_frame, text="Goal Summary")
+        goal_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(10, 0))
+        ttk.Label(goal_frame, text=f"Workouts Completed: {self.user_data['workout_day'] - 1}/7").pack(pady=5)
+        ttk.Label(goal_frame, text=f"Diet Plan Followed: {self.user_data['diet_day'] - 1}/7").pack(pady=5)
+
+        # Middle section: Weekly Plan
+        plan_frame = ttk.LabelFrame(main_frame, text="Weekly Meal and Workout Plan")
+        plan_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 20))
+
+        plan_tree = ttk.Treeview(plan_frame, columns=("Day", "Meal", "Workout"), show="headings", height=7)
+        plan_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        for col in ("Day", "Meal", "Workout"):
+            plan_tree.heading(col, text=col)
+            plan_tree.column(col, width=100)
+
+        scrollbar = ttk.Scrollbar(plan_frame, orient="vertical", command=plan_tree.yview)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        plan_tree.configure(yscrollcommand=scrollbar.set)
+
+        # Populate the treeview with completed workout and diet data
+        workout_days = max(self.user_data['workout_day'], self.user_data['both_workout_day'])
+        diet_days = max(self.user_data['diet_day'], self.user_data['both_diet_day'])
+        max_days = max(workout_days, diet_days)
+
+        for i in range(max_days):
+            day = i + 1
+            workout = "Completed" if day < workout_days else "Not completed"
+            diet = "Followed" if day < diet_days else "Not followed"
+            plan_tree.insert("", "end", values=(f"Day {day}", diet, workout))
+
+        # Bottom section: Motivation and Recommendations
+        bottom_frame = ttk.Frame(main_frame)
+        bottom_frame.pack(fill=tk.X)
+
+        # Motivational Quote
+        quote_frame = ttk.LabelFrame(bottom_frame, text="Your Daily Motivation")
+        quote_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 10))
+        quote_label = ttk.Label(quote_frame, text="Stay committed to your decisions, but flexible in your approach.",
+                                wraplength=180)
+        quote_label.pack(pady=10, padx=10)
+
+        # Recommendations
+        rec_frame = ttk.LabelFrame(bottom_frame, text="Recommendations")
+        rec_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(10, 0))
+        ttk.Label(rec_frame, text="Daily Calorie Intake: 2000").pack(pady=5)
+        ttk.Label(rec_frame, text="Daily Steps: 7K-10K").pack(pady=5)
+
+        # Back button
+        back_button = ttk.Button(main_frame, text="Back to Plan Choice", command=self.show_plan_choice_page)
+        back_button.pack(pady=(20, 0))
+
 
 if __name__ == "__main__":
     app = FemaleFitnessApp()
